@@ -15,12 +15,17 @@ npm install --save saltovo-compents
 ```jsx
 import React, { Component } from 'react'
 
-import MyComponent from 'saltovo-compents'
-import 'saltovo-compents/dist/index.css'
+import {FormTable} from 'saltovo-compents'
 
 class Example extends Component {
   render() {
-    return <MyComponent />
+    return  <FormTable
+            title={'社会兼职'}
+            colunmns={SocialPosition}
+            cardtitle="社会兼职（学会、协会、兼职教授）"
+            data={formData.SocialpositionList}
+            title="近三年社会兼职"
+          />
   }
 }
 ```
