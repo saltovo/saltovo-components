@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
-import { Table, Button, Card, ConfigProvider } from 'antd'
-import { useDynamicList } from 'ahooks'
+import React, { useEffect } from 'react';
+import { Table, Button, Card, ConfigProvider } from 'antd';
+import { useDynamicList } from 'ahooks';
 
 export default (props) => {
   const {
@@ -10,12 +10,12 @@ export default (props) => {
     move,
     push,
     sortForm,
-    resetList
-  } = useDynamicList(props.data || [])
+    resetList,
+  } = useDynamicList(props.data || []);
 
   useEffect(() => {
-    resetList(props.data)
-  }, [props.data])
+    resetList(props.data);
+  }, [props.data]);
 
   const columns = [
     ...props.colunmns(getKey),
@@ -28,14 +28,14 @@ export default (props) => {
         <Button
           danger
           onClick={() => {
-            remove(index)
+            remove(index);
           }}
         >
           删除
         </Button>
-      )
-    }
-  ]
+      ),
+    },
+  ];
 
   return (
     <Card
@@ -45,7 +45,7 @@ export default (props) => {
     >
       <ConfigProvider
         renderEmpty={() => {
-          return `暂无${props.cardtitle.split('（')[0]}`
+          return `暂无${props.cardtitle.split('（')[0]}`;
         }}
       >
         <Table
@@ -57,16 +57,16 @@ export default (props) => {
       </ConfigProvider>
       <Button
         style={{
-          marginTop: 8
+          marginTop: 8,
         }}
         block
-        type='dashed'
+        type="dashed"
         onClick={() => {
-          push({})
+          push({});
         }}
       >
         {`添加${props.title}`}
       </Button>
     </Card>
-  )
-}
+  );
+};
