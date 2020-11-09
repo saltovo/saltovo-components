@@ -1,9 +1,27 @@
 /* add css module styles here (optional) */
 
-.test {
-  margin: 2em;
-  padding: 0.5em;
-  border: 2px solid #000;
-  font-size: 2em;
-  text-align: center;
+.loginout svg {
+  height: 20px;
+  width: 20px;
+}
+
+.ant-pro-global-header div:nth-child(2) {
+  display: none;
+}
+
+.odm-confirm {
+  right: 0px !important;
+}
+
+.odm-row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.can-be-show {
+  display: none;
+}
+
+.ant-pro-basicLayout-content {
+  margin: 0 !important;
 }

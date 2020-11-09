@@ -1,4 +1,6 @@
 import React from 'react';
-import styles from './styles.module.css';
+import './styles.module.css';
 
-export { default as FormTable } from './formtable';
+export { default as FormTable } from './components/formtable/formtable';
+
+export { default as LayoutMixRightContent } from './components/rightcontent/layoutmix/layoutmixrightcontent';
