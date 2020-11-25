@@ -25,11 +25,7 @@ export default (props) => {
         {props.UserName || ''}
       </p>
       <Popover placement="bottom" title={false} content="退出">
-        <LoginOutlined
-          className={'loginout'}
-          style={{ marginLeft: '30px' }}
-          onClick={props.loginout}
-        />
+        <LoginOutlined className={'loginout'} style={{ marginLeft: '30px' }} onClick={props.loginout} />
       </Popover>
     </div>
   );

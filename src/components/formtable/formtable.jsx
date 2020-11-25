@@ -3,15 +3,7 @@ import { Table, Button, Card, ConfigProvider } from 'antd';
 import { useDynamicList } from 'ahooks';
 
 export default (props) => {
-  const {
-    list,
-    remove,
-    getKey,
-    move,
-    push,
-    sortForm,
-    resetList,
-  } = useDynamicList(props.data || []);
+  const { list, remove, getKey, move, push, sortForm, resetList } = useDynamicList(props.data || []);
 
   useEffect(() => {
     resetList(props.data);
@@ -38,22 +30,13 @@ export default (props) => {
   ];
 
   return (
-    <Card
-      title={props.cardtitle ? props.cardtitle : props.title}
-      style={{ marginBottom: '20px' }}
-      hoverable={true}
-    >
+    <Card title={props.cardtitle ? props.cardtitle : props.title} style={{ marginBottom: '20px' }} hoverable={true}>
       <ConfigProvider
         renderEmpty={() => {
           return `暂无${props.cardtitle.split('（')[0]}`;
         }}
       >
-        <Table
-          columns={columns}
-          dataSource={list}
-          rowKey={(r, index) => getKey(index).toString()}
-          pagination={false}
-        />
+        <Table columns={columns} dataSource={list} rowKey={(r, index) => getKey(index).toString()} pagination={false} />
       </ConfigProvider>
       <Button
         style={{
