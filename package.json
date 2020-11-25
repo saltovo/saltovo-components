@@ -1,19 +1,19 @@
 {
   "name": "saltovo-compents",
-  "version": "1.0.0-beta.3",
-  "description": "Made with create-react-library",
-  "author": "",
+  "version": "1.0.0-beta.4",
+  "description": "saltovo react library",
+  "author": "saltovo",
   "license": "MIT",
   "repository": "/saltovo-compents",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
-  "source": "src/index.js",
+  "source": "src/index.ts",
   "engines": {
     "node": ">=10"
   },
   "scripts": {
-    "build": "microbundle-crl --no-compress --format modern,cjs",
-    "start": "microbundle-crl watch --no-compress --format modern,cjs",
+    "build": "microbundle-crl --css-modules false --no-compress --format modern,cjs",
+    "start": "microbundle-crl --css-modules false watch --no-compress --format modern,cjs",
     "prepare": "run-s build",
     "test": "run-s test:unit test:lint test:build",
     "test:build": "run-s build",
@@ -39,6 +39,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react": "^17.0.0",
     "babel-eslint": "^10.0.3",
     "cross-env": "^7.0.2",
     "eslint": "^6.8.0",
@@ -58,7 +59,8 @@
     "prettier": "^2.0.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "^3.4.1"
+    "react-scripts": "^3.4.1",
+    "unstated-next": "^1.1.0"
   },
   "files": [
     "dist"
