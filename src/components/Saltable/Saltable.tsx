@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo } from 'react';
 import { Table, Button, Checkbox, Drawer, Col } from 'antd';
 import ColumnsSettings from './columnssetting';
-import Counter from './container';
-import { Columnsvalue } from './container';
+import Counter, { Columnsvalue } from './container';
+import { SaltableProps } from './index';
 import './Saltable.css';
 
-export default (props: any) => {
+export default (props: SaltableProps) => {
   const counter = Counter.useContainer();
 
   const toolBarRender = useMemo(() => {
@@ -43,7 +43,7 @@ export default (props: any) => {
             return item;
           })}
         </div>
-        <ColumnsSettings columns={props.columns} />
+        <ColumnsSettings {...props} />
       </div>
       <Table {...props} columns={columns} />
     </div>

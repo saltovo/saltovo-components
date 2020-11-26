@@ -2,13 +2,14 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Popover, Checkbox, Tooltip, Col } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
 import Counter, { Columnsvalue } from './container';
+import { SaltableProps } from './index';
 
 export type checkedList = string[];
 export interface GroupCheckboxListMap {
   localColumns: Columnsvalue[];
 }
 
-export default (props: any) => {
+export default (props: SaltableProps) => {
   const definecheckedList: checkedList = [];
   props.columns.map((item: Columnsvalue) => {
     if (item.defaultchecked) {
