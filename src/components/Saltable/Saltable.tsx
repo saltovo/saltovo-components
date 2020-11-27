@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Table, Button, Checkbox, Drawer, Col } from 'antd';
 import ColumnsSettings from './columnssetting';
 import Counter, { Columnsvalue } from './container';
@@ -6,7 +6,20 @@ import { SaltableProps } from './index';
 import './Saltable.css';
 
 export default (props: SaltableProps) => {
+  const [columnssettingshow, setColumnsSettingShow] = useState<boolean>(true);
   const counter = Counter.useContainer();
+
+  useEffect(() => {
+    let tempdata: string[] = [];
+    props.columns.map((item: Columnsvalue) => {
+      if (item.defaultchecked) {
+        return tempdata.push(item.dataIndex);
+      }
+    });
+    if (tempdata.length === 0) {
+      setColumnsSettingShow(false);
+    }
+  }, []);
 
   const toolBarRender = useMemo(() => {
     let toolBarRender = [];
@@ -32,8 +45,11 @@ export default (props: SaltableProps) => {
     counter.columnsSetting.forEach((value, key) => {
       tempArray.push(value);
     });
+    if (!columnssettingshow) {
+      tempArray = props.columns;
+    }
     return tempArray;
-  }, [counter.columnsSetting]);
+  }, [counter.columnsSetting, columnssettingshow]);
 
   return (
     <div className="ant-card-body" style={{ backgroundColor: 'white' }}>
@@ -43,7 +59,7 @@ export default (props: SaltableProps) => {
             return item;
           })}
         </div>
-        <ColumnsSettings {...props} />
+        {columnssettingshow ? <ColumnsSettings {...props} /> : <div />}
       </div>
       <Table {...props} columns={columns} />
     </div>

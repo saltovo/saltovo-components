@@ -5,7 +5,7 @@ import { TableProps } from 'antd/lib/table';
 import { Columnsvalue } from './container';
 
 export interface SaltableProps extends TableProps<any> {
-  toolBarRender: any;
+  toolBarRender?: any;
   columns: Columnsvalue[];
 }
 
