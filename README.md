@@ -54,7 +54,7 @@ export default () => {
 > 在 antd table 的基础上增加了列设置与 toolBarRender，支持 antd table 的所有参数
 
 ```jsx
-import { layoutmixrightcontent } from 'saltovo-compents';
+import { Saltable } from 'saltovo-compents';
 export default () => {
   const columns = [
     {
@@ -73,12 +73,16 @@ export default () => {
   ];
 
   return (
-    <ProTable
+    <Saltable
       /*
         toolBarRender支持function,array
         columns设置默认展示的列 defaultchecked: true,
+        onColumnsStateChange输出当前的columns
         */
-      toolBarRender={selectedTag}
+        onColumnsStateChange={(ColumnsSelceted) => {
+          console.log(ColumnsSelceted)
+        }}
+      toolBarRender={[</div>]}
       columns={columns}
     />
   );
