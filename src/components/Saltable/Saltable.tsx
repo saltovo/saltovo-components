@@ -51,6 +51,12 @@ export default (props: SaltableProps) => {
     return tempArray;
   }, [counter.columnsSetting, columnssettingshow]);
 
+  useEffect(() => {
+    if (props.onColumnsStateChange) {
+      props.onColumnsStateChange(columns);
+    }
+  }, [columns]);
+
   return (
     <div className="ant-card-body" style={{ backgroundColor: 'white' }}>
       <div className="pro-table-list">

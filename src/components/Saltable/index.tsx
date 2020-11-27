@@ -6,6 +6,7 @@ import { Columnsvalue } from './container';
 
 export interface SaltableProps extends TableProps<any> {
   toolBarRender?: any;
+  onColumnsStateChange?: (ColumnsSelceted: Columnsvalue[]) => void;
   columns: Columnsvalue[];
 }
 
