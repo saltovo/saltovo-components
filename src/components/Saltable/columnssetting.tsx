@@ -54,7 +54,7 @@ export default (props: SaltableProps) => {
     counter.setColumnsMap(tempMap);
   };
 
-  const GroupCheckboxList = ({ localColumns }: GroupCheckboxListMap) => {
+  const GroupCheckboxList = ({ localColumns }: GroupCheckboxListMap): JSX.Element => {
     return (
       <Checkbox.Group
         value={checkedList}
@@ -64,27 +64,29 @@ export default (props: SaltableProps) => {
           setCheckAll(checkedValues.length === props.columns.length);
         }}
       >
-        {localColumns.map((item: Columnsvalue, index: number) => {
-          return (
-            <Col key={index} className="column-setting">
-              <Checkbox
-                defaultChecked={item.defaultchecked}
-                value={item.dataIndex}
-                onChange={(e) => {
-                  let tempMap = new Map(counter.columnsSetting);
-                  if (e.target.checked) {
-                    tempMap.set(item.dataIndex, item);
-                  } else {
-                    tempMap.delete(item.dataIndex);
-                  }
-                  counter.setColumnsMap(tempMap);
-                }}
-              >
-                {item.title}
-              </Checkbox>
-            </Col>
-          );
-        })}
+        {localColumns.map(
+          (item: Columnsvalue, index: number): JSX.Element => {
+            return (
+              <Col key={index} className="column-setting">
+                <Checkbox
+                  defaultChecked={item.defaultchecked}
+                  value={item.dataIndex}
+                  onChange={(e) => {
+                    let tempMap = new Map(counter.columnsSetting);
+                    if (e.target.checked) {
+                      tempMap.set(item.dataIndex, item);
+                    } else {
+                      tempMap.delete(item.dataIndex);
+                    }
+                    counter.setColumnsMap(tempMap);
+                  }}
+                >
+                  {item.title}
+                </Checkbox>
+              </Col>
+            );
+          },
+        )}
       </Checkbox.Group>
     );
   };
