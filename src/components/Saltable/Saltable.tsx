@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Table, Button, Checkbox, Drawer, Col } from 'antd';
+import { Table } from 'antd';
 import ColumnsSettings from './columnssetting';
 import Counter, { Columnsvalue } from './container';
 import { SaltableProps } from './index';

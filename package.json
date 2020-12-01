@@ -25,9 +25,9 @@
     "prettier": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,less,md}\""
   },
   "peerDependencies": {
-    "ahooks": "2.8.1",
-    "antd": "4.8.0",
-    "react": "^16.0.0"
+    "ahooks": ">=2.8.1",
+    "antd": "4.x",
+    "react": "^16.x"
   },
   "husky": {
     "hooks": {
@@ -68,10 +68,9 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "^3.4.1",
-    "unstated-next": "^1.1.0"
+    "antd": "^4.9.0"
   },
   "files": [
     "dist"
-  ],
-  "dependencies": {}
+  ]
 }

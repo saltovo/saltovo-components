@@ -10,6 +10,11 @@ export interface SaltableProps extends TableProps<any> {
   columns: Columnsvalue[];
 }
 
+/**
+ * saltable组件，自带可配置列选择
+ * @param SaltableProps
+ **/
+
 export default (props: SaltableProps) => {
   return (
     <Counter.Provider>
