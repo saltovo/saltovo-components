@@ -2,7 +2,12 @@ import React from 'react';
 import { LoginOutlined } from '@ant-design/icons';
 import { Popover } from 'antd';
 
-export default (props) => {
+interface props {
+  loginout: () => void;
+  UserName: string;
+}
+
+export default (props: props) => {
   return (
     <div
       style={{
