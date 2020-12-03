@@ -3,7 +3,6 @@ import { Table } from 'antd';
 import ColumnsSettings from './columnssetting';
 import Counter, { Columnsvalue } from './container';
 import { SaltableProps } from './index';
-import './Saltable.css';
 
 export default (props: SaltableProps) => {
   const [columnssettingshow, setColumnsSettingShow] = useState<boolean>(true);

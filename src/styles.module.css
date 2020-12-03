@@ -51,3 +51,9 @@
   font-size: 16px;
   margin-bottom: 4px;
 }
+
+.columnssetting-popover .ant-popover-content .ant-popover-inner-content {
+  height: 400px;
+  overflow: auto;
+  width: 400px;
+}

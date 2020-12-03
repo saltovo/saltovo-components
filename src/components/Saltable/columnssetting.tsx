@@ -93,7 +93,7 @@ export default (props: SaltableProps) => {
 
   return (
     <Popover
-      arrowPointAtCenter
+      overlayClassName="columnssetting-popover"
       title={
         <div style={{ padding: '4px 16px 4px 0px' }}>
           <Checkbox indeterminate={indeterminate} onChange={onCheckAllChange} checked={checkAll}>
