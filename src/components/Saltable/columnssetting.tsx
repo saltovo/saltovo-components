@@ -10,14 +10,18 @@ export interface GroupCheckboxListMap {
 }
 
 export default (props: SaltableProps) => {
+  //默认为checked的数组
   const definecheckedList: checkedList = [];
   props.columns.map((item: Columnsvalue) => {
     if (item.defaultchecked) {
       return definecheckedList.push(item.dataIndex);
     }
   });
+  //控制checkbox的选中情况
   const [checkedList, setCheckedList] = useState<checkedList>(definecheckedList);
+  //控制列展示按钮为全选还是半选
   const [indeterminate, setIndeterminate] = useState<boolean>(true);
+  //控制是否为全选
   const [checkAll, setCheckAll] = useState<boolean>(false);
   const counter = Counter.useContainer();
 

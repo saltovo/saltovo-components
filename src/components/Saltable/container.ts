@@ -2,7 +2,7 @@ import { createContainer } from 'unstated-next';
 import { useState, useRef } from 'react';
 import { ColumnProps, ColumnsType } from 'antd/lib/table';
 
-export interface Columnsvalue extends ColumnsType<any> {
+export interface Columnsvalue<p = unknown> extends ColumnsType<p> {
   title: string;
   dataIndex: string;
   width: number;

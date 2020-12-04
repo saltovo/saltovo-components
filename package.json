@@ -47,6 +47,7 @@
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
     "@types/react": "^17.0.0",
+    "ahooks": "^2.9.2",
     "antd": "^4.9.0",
     "babel-eslint": "^10.0.3",
     "cross-env": "^7.0.2",
@@ -72,5 +73,8 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "dependencies": {
+    "unstated-next": "^1.1.0"
+  }
 }

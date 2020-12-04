@@ -5,6 +5,7 @@ import Counter, { Columnsvalue } from './container';
 import { SaltableProps } from './index';
 
 export default (props: SaltableProps) => {
+  //是否显示列设置icon
   const [columnssettingshow, setColumnsSettingShow] = useState<boolean>(true);
   const counter = Counter.useContainer();
 
@@ -20,6 +21,7 @@ export default (props: SaltableProps) => {
     }
   }, []);
 
+  //判断渲染toolBarRender
   const toolBarRender = useMemo(() => {
     let toolBarRender = [];
     switch (typeof props.toolBarRender) {
