@@ -1,22 +1,33 @@
 import React, { useEffect } from 'react';
 import { Table, Button, Card, ConfigProvider } from 'antd';
 import { useDynamicList } from 'ahooks';
+import { ColumnsType } from 'antd/lib/table/index';
+import { TableProps as RcTableProps } from 'rc-table/lib/Table';
 
-export default (props) => {
+type ColumnsFunction<T> = (getKey: (index: number) => number) => ColumnsType<T>;
+
+interface FormTableProps<T> {
+  colunmns: ColumnsFunction<T>;
+  data: RcTableProps<T>['data'];
+  cardtitle: string;
+  title: string;
+}
+
+export default (props: FormTableProps<any>) => {
   const { list, remove, getKey, move, push, sortForm, resetList } = useDynamicList(props.data || []);
 
   useEffect(() => {
     resetList(props.data);
   }, [props.data]);
 
-  const columns = [
+  const columns: ColumnsType = [
     ...props.colunmns(getKey),
     {
       key: 'memo',
       title: '操作',
       dataIndex: 'memo',
       align: 'center',
-      render: (text, row, index) => (
+      render: (index: number) => (
         <Button
           danger
           onClick={() => {
@@ -36,7 +47,12 @@ export default (props) => {
           return `暂无${props.cardtitle.split('（')[0]}`;
         }}
       >
-        <Table columns={columns} dataSource={list} rowKey={(r, index) => getKey(index).toString()} pagination={false} />
+        <Table
+          columns={columns}
+          dataSource={list}
+          rowKey={(r, index: any) => getKey(index).toString()}
+          pagination={false}
+        />
       </ConfigProvider>
       <Button
         style={{
