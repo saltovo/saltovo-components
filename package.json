@@ -1,8 +1,15 @@
 {
   "name": "saltovo-compents",
   "version": "1.0.0-beta.14",
-  "description": "saltovo react library",
+  "description": "saltovo react library, 基于antd的虚拟列表，列设置",
   "author": "saltovo",
+  "keywords": [
+    "antd-table",
+    "virtualList",
+    "antd-table虚拟列表",
+    "antd-table列设置",
+    "antd-table选择展示的列设置选项"
+  ],
   "license": "MIT",
   "repository": "/saltovo-compents",
   "main": "dist/index.js",
