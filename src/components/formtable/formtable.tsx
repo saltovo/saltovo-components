@@ -14,7 +14,7 @@ interface FormTableProps<T> {
 }
 
 export default (props: FormTableProps<any>) => {
-  const { list, remove, getKey, move, push, sortForm, resetList } = useDynamicList(props.data || []);
+  const { list, remove, getKey, push, resetList } = useDynamicList(props.data || []);
 
   useEffect(() => {
     resetList(props.data);
