@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Popover, Checkbox, Tooltip, Col } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
-import Counter, { Columnsvalue } from './container';
+import Counter, { Columnsvalue, ColumnsSettingProps } from './container';
 import { SaltableProps } from './index';
 
 export type checkedList = string[];
@@ -30,32 +30,28 @@ export default (props: SaltableProps) => {
   }, []);
 
   const handleReset = () => {
-    let tempMap = new Map();
+    let tempArray: ColumnsSettingProps = [];
     props.columns.map((item: Columnsvalue) => {
       if (item.defaultchecked) {
-        tempMap.set(item.dataIndex, item);
+        tempArray.push(item);
       }
     });
     setCheckedList(definecheckedList);
     setIndeterminate(true);
     setCheckAll(false);
-    counter.setColumnsMap(tempMap);
+    counter.setColumnsArray(tempArray);
   };
 
   const onCheckAllChange = (e: any) => {
     let list = props.columns.map((item: Columnsvalue) => {
       return item.dataIndex;
     });
-    let tempMap = new Map();
     setCheckedList(e.target.checked ? list : []);
     setIndeterminate(false);
     setCheckAll(e.target.checked);
     if (e.target.checked) {
-      props.columns.map((item: Columnsvalue) => {
-        tempMap.set(item.dataIndex, item);
-      });
+      counter.setColumnsArray(props.columns);
     }
-    counter.setColumnsMap(tempMap);
   };
 
   const GroupCheckboxList = ({ localColumns }: GroupCheckboxListMap): JSX.Element => {
@@ -76,13 +72,18 @@ export default (props: SaltableProps) => {
                   defaultChecked={item.defaultchecked}
                   value={item.dataIndex}
                   onChange={(e) => {
-                    let tempMap = new Map(counter.columnsSetting);
+                    let tempArray = [...counter.columnsSetting];
                     if (e.target.checked) {
-                      tempMap.set(item.dataIndex, item);
+                      tempArray.push(item);
                     } else {
-                      tempMap.delete(item.dataIndex);
+                      const temp = tempArray.filter((ele) => {
+                        console.log(ele.dataIndex, item.dataIndex);
+                        return ele.dataIndex !== item.dataIndex;
+                      });
+                      tempArray = temp;
+                      console.log(temp);
                     }
-                    counter.setColumnsMap(tempMap);
+                    counter.setColumnsArray(tempArray);
                   }}
                 >
                   {item.title}

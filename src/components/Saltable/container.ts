@@ -10,12 +10,12 @@ export interface Columnsvalue<p = unknown> extends ColumnsType<p> {
   align: 'center' | 'left' | 'right';
 }
 
-export type ColumnsMap = Map<string, Columnsvalue>;
+export type ColumnsSettingProps = Array<Columnsvalue>;
 
 function useCounter() {
-  let [columnsSetting, setColumnsSetting] = useState<ColumnsMap>(new Map());
-  const setColumnsMap = (map: ColumnsMap) => setColumnsSetting(map);
-  return { columnsSetting, setColumnsMap };
+  let [columnsSetting, setColumnsSetting] = useState<ColumnsSettingProps>([]);
+  const setColumnsArray = (array: ColumnsSettingProps) => setColumnsSetting(array);
+  return { columnsSetting, setColumnsArray };
 }
 
 const Counter = createContainer(useCounter);

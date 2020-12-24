@@ -42,10 +42,7 @@ export default (props: SaltableProps) => {
   }, [props.toolBarRender]);
 
   const columns = useMemo(() => {
-    let tempArray: Columnsvalue[] = [];
-    counter.columnsSetting.forEach((value, key) => {
-      tempArray.push(value);
-    });
+    let tempArray: Columnsvalue[] = counter.columnsSetting;
     if (!columnssettingshow) {
       tempArray = props.columns;
     }
