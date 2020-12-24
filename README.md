@@ -55,6 +55,7 @@ export default () => {
 
 ```jsx
 import { Saltable } from 'saltovo-compents';
+import 'saltovo-compents/dist/index.css';
 export default () => {
   const columns = [
     {
