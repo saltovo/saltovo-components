@@ -14,8 +14,16 @@ export type ColumnsMap = Map<string, Columnsvalue>;
 
 function useCounter() {
   let [columnsSetting, setColumnsSetting] = useState<ColumnsMap>(new Map());
+  const sortKeyColumns = useRef<string[]>([]);
   const setColumnsMap = (map: ColumnsMap) => setColumnsSetting(map);
-  return { columnsSetting, setColumnsMap };
+  return {
+    sortKeyColumns: sortKeyColumns.current,
+    setSortKeyColumns: (keys: string[]) => {
+      sortKeyColumns.current = keys;
+    },
+    columnsSetting,
+    setColumnsMap,
+  };
 }
 
 const Counter = createContainer(useCounter);

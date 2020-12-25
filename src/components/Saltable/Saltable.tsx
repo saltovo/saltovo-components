@@ -10,16 +10,20 @@ export default (props: SaltableProps) => {
   const counter = Counter.useContainer();
 
   useEffect(() => {
-    let tempdata: string[] = [];
+    let sortData: string[] = [];
     props.columns.map((item: Columnsvalue) => {
-      if (item.defaultchecked) {
-        return tempdata.push(item.dataIndex);
-      }
+      return sortData.push(item.dataIndex);
     });
-    if (tempdata.length === 0) {
+    counter.setSortKeyColumns(sortData);
+    let columnsSettingShow = props.columns.some((ele) => {
+      return ele.defaultchecked;
+    });
+    if (!columnsSettingShow) {
       setColumnsSettingShow(false);
     }
   }, []);
+
+  console.log(counter.sortKeyColumns);
 
   //判断渲染toolBarRender
   const toolBarRender = useMemo(() => {
@@ -43,8 +47,10 @@ export default (props: SaltableProps) => {
 
   const columns = useMemo(() => {
     let tempArray: Columnsvalue[] = [];
-    counter.columnsSetting.forEach((value, key) => {
-      tempArray.push(value);
+    counter.sortKeyColumns.map((item, index) => {
+      if (counter.columnsSetting.has(item)) {
+        tempArray.push(counter.columnsSetting.get(item)!);
+      }
     });
     if (!columnssettingshow) {
       tempArray = props.columns;
