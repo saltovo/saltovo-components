@@ -23,8 +23,6 @@ export default (props: SaltableProps) => {
     }
   }, []);
 
-  console.log(counter.sortKeyColumns);
-
   //判断渲染toolBarRender
   const toolBarRender = useMemo(() => {
     let toolBarRender = [];
@@ -65,7 +63,7 @@ export default (props: SaltableProps) => {
   }, [columns]);
 
   return (
-    <div className="ant-card-body" style={{ backgroundColor: 'white' }}>
+    <div className="ant-card-body">
       <div className="pro-table-list">
         <div className="pro-table-toolBar">
           {toolBarRender.map((item: JSX.Element) => {

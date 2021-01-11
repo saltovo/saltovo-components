@@ -29,8 +29,6 @@ export default (props: SaltableProps) => {
     handleReset();
   }, []);
 
-  console.log(1);
-
   const handleReset = () => {
     let tempMap = new Map();
     props.columns.map((item: Columnsvalue) => {
