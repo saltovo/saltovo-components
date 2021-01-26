@@ -10,11 +10,11 @@ export default (props: SaltableProps) => {
   const counter = Counter.useContainer();
 
   useEffect(() => {
-    let sortData: string[] = [];
-    props.columns.map((item: Columnsvalue) => {
-      return sortData.push(item.dataIndex);
-    });
-    counter.setSortKeyColumns(sortData);
+    // let sortData: string[] = [];
+    // props.columns.map((item: Columnsvalue) => {
+    //   return sortData.push(item.dataIndex);
+    // });
+    // counter.setSortKeyColumns(sortData);
     let columnsSettingShow = props.columns.some((ele) => {
       return ele.defaultchecked;
     });
@@ -45,6 +45,7 @@ export default (props: SaltableProps) => {
 
   const columns = useMemo(() => {
     let tempArray: Columnsvalue[] = [];
+    console.log(counter.sortKeyColumns);
     counter.sortKeyColumns.map((item, index) => {
       if (counter.columnsSetting.has(item)) {
         tempArray.push(counter.columnsSetting.get(item)!);
@@ -54,13 +55,15 @@ export default (props: SaltableProps) => {
       tempArray = props.columns;
     }
     return tempArray;
-  }, [counter.columnsSetting, columnssettingshow]);
+  }, [counter.sortKeyColumns, counter.columnsSetting, columnssettingshow]);
 
   useEffect(() => {
     if (props.onColumnsStateChange) {
       props.onColumnsStateChange(columns);
     }
   }, [columns]);
+
+  console.log(columns);
 
   return (
     <div className="ant-card-body">

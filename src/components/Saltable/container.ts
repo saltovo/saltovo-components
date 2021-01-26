@@ -14,13 +14,11 @@ export type ColumnsMap = Map<string, Columnsvalue>;
 
 function useCounter() {
   let [columnsSetting, setColumnsSetting] = useState<ColumnsMap>(new Map());
-  const sortKeyColumns = useRef<string[]>([]);
+  let [sortKeyColumns, setSortKeyColumns] = useState<string[]>([]);
   const setColumnsMap = (map: ColumnsMap) => setColumnsSetting(map);
   return {
-    sortKeyColumns: sortKeyColumns.current,
-    setSortKeyColumns: (keys: string[]) => {
-      sortKeyColumns.current = keys;
-    },
+    sortKeyColumns,
+    setSortKeyColumns,
     columnsSetting,
     setColumnsMap,
   };
