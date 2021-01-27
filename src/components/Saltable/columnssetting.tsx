@@ -3,14 +3,12 @@ import { Popover, Checkbox, Tooltip, Col, Tree } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
 import Counter, { Columnsvalue } from './container';
 import { SaltableProps } from './index';
-
-export type checkedList = string[];
 export interface GroupCheckboxListMap {
   localColumns: Columnsvalue[];
 }
 export default (props: SaltableProps) => {
   //默认为checked的数组
-  const definecheckedList: checkedList = [];
+  const definecheckedList: React.Key[] = [];
   const treeData: any = [];
   const ColumnsTransformMap = new Map();
   props.columns.map((item: Columnsvalue) => {
@@ -25,7 +23,10 @@ export default (props: SaltableProps) => {
   const [indeterminate, setIndeterminate] = useState<boolean>(true);
   //控制是否为全选
   const [checkAll, setCheckAll] = useState<boolean>(false);
+  //选中的列数组
   const [checkedKeys, setCheckedKeys] = useState<any>(definecheckedList);
+  //控制列设置的顺序调换
+  //这里总觉得多渲染了一次，暂时先这样。后期再继续优化
   const [treedata, setTreeData] = useState<any>(treeData);
   const counter = Counter.useContainer();
 
@@ -42,10 +43,10 @@ export default (props: SaltableProps) => {
   }, [treedata]);
 
   const handleReset = () => {
-    let tempMap = new Map();
+    let tempMap: React.Key[] = [];
     props.columns.map((item: Columnsvalue) => {
       if (item.defaultchecked) {
-        tempMap.set(item.dataIndex, item);
+        tempMap.push(item.dataIndex);
       }
     });
     setCheckedKeys(definecheckedList);
@@ -59,18 +60,19 @@ export default (props: SaltableProps) => {
     let list = props.columns.map((item: Columnsvalue) => {
       return item.dataIndex;
     });
-    let tempMap = new Map();
+    let tempMap: React.Key[] = [];
     setCheckedKeys(e.target.checked ? list : []);
     setIndeterminate(false);
     setCheckAll(e.target.checked);
     if (e.target.checked) {
       props.columns.map((item: Columnsvalue) => {
-        tempMap.set(item.dataIndex, item);
+        tempMap.push(item.dataIndex);
       });
     }
     counter.setColumnsMap(tempMap);
   };
 
+  //生成列设置列表
   const GroupCheckboxList = ({ localColumns }: any): JSX.Element => {
     return (
       <Tree
@@ -101,19 +103,15 @@ export default (props: SaltableProps) => {
           }
         }}
         onCheck={(checkedKeys, e) => {
-          let tempMap = new Map();
           if (Array.isArray(checkedKeys)) {
             setIndeterminate(!!checkedKeys.length && checkedKeys.length < props.columns.length);
             setCheckAll(checkedKeys.length === props.columns.length);
-            checkedKeys.map((item) => {
-              tempMap.set(item, ColumnsTransformMap.get(item));
-            });
+            counter.setColumnsMap(checkedKeys!);
           }
-          counter.setColumnsMap(tempMap);
           setCheckedKeys(checkedKeys);
         }}
         checkedKeys={checkedKeys}
-        treeData={treedata}
+        treeData={localColumns}
       />
     );
   };
@@ -131,7 +129,7 @@ export default (props: SaltableProps) => {
       }
       trigger="click"
       placement="bottomRight"
-      content={<GroupCheckboxList localColumns={treeData} />}
+      content={<GroupCheckboxList localColumns={treedata} />}
     >
       <Tooltip title="列设置">
         <SettingOutlined />
