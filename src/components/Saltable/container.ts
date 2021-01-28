@@ -8,6 +8,7 @@ export interface Columnsvalue<p = unknown> extends ColumnsType<p> {
   width: number;
   defaultchecked: boolean;
   align: 'center' | 'left' | 'right';
+  children?: Columnsvalue[];
 }
 
 export type ColumnsMap = Map<React.Key, Columnsvalue>;

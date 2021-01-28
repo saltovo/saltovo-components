@@ -3,20 +3,37 @@ import { Popover, Checkbox, Tooltip, Col, Tree } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
 import Counter, { Columnsvalue } from './container';
 import { SaltableProps } from './index';
+
 export interface GroupCheckboxListMap {
   localColumns: Columnsvalue[];
 }
+
 export default (props: SaltableProps) => {
   //默认为checked的数组
   const definecheckedList: React.Key[] = [];
   const treeData: any = [];
-  const ColumnsTransformMap = new Map();
   props.columns.map((item: Columnsvalue) => {
     if (item.defaultchecked) {
       definecheckedList.push(item.dataIndex);
     }
-    treeData.push({ title: item.title, key: item.dataIndex });
-    ColumnsTransformMap.set(item.dataIndex, item);
+    if (item.children && item.children.length > 0) {
+      item.children.map((ele: Columnsvalue) => {
+        if (ele.defaultchecked) {
+          definecheckedList.push(ele.dataIndex);
+        }
+      });
+    }
+  });
+  props.columns.map((item: Columnsvalue) => {
+    if (item.children && item.children.length > 0) {
+      let tempdata: any[] = [];
+      item.children.map((ele: Columnsvalue) => {
+        tempdata.push({ title: ele.title, key: ele.dataIndex });
+      });
+      treeData.push({ title: item.title, key: item.dataIndex, children: tempdata });
+    } else {
+      treeData.push({ title: item.title, key: item.dataIndex });
+    }
   });
 
   //控制列展示按钮为全选还是半选
@@ -36,7 +53,12 @@ export default (props: SaltableProps) => {
 
   useEffect(() => {
     let sortData: string[] = [];
-    treedata.map((item: { key: string }) => {
+    treedata.map((item: { key: string; title: React.Key; children: { key: string; title: React.Key }[] }) => {
+      if (item.children && item.children.length > 0) {
+        return item.children.map((ele) => {
+          return sortData.push(ele.key);
+        });
+      }
       return sortData.push(item.key);
     });
     counter.setSortKeyColumns(sortData);
@@ -45,6 +67,11 @@ export default (props: SaltableProps) => {
   const handleReset = () => {
     let tempMap: React.Key[] = [];
     props.columns.map((item: Columnsvalue) => {
+      if (item.children && item.children.length > 0) {
+        item.children.map((ele) => {
+          tempMap.push(ele.dataIndex);
+        });
+      }
       if (item.defaultchecked) {
         tempMap.push(item.dataIndex);
       }
@@ -78,7 +105,6 @@ export default (props: SaltableProps) => {
       <Tree
         checkable
         draggable
-        defaultCheckedKeys={definecheckedList}
         onDrop={({ event, node, dragNode, dragNodesKeys }) => {
           //node.pos与dragNode.pos为树结构的值，如不理解可输出
           let nodePos = node.pos.split('-');
@@ -103,6 +129,7 @@ export default (props: SaltableProps) => {
           }
         }}
         onCheck={(checkedKeys, e) => {
+          console.log(checkedKeys);
           if (Array.isArray(checkedKeys)) {
             setIndeterminate(!!checkedKeys.length && checkedKeys.length < props.columns.length);
             setCheckAll(checkedKeys.length === props.columns.length);
