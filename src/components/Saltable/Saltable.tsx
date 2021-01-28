@@ -63,7 +63,6 @@ export default (props: SaltableProps) => {
         checkedMap.set(item, ColumnsTransformMap.get(item));
       }
     });
-    console.log(counter.columnsSetting);
     counter.sortKeyColumns.map((item, index) => {
       if (checkedMap.has(item)) {
         tempArray.push(checkedMap.get(item)!);
@@ -80,8 +79,6 @@ export default (props: SaltableProps) => {
       props.onColumnsStateChange(columns);
     }
   }, [columns]);
-
-  console.log(columns);
 
   return (
     <div className="ant-card-body">

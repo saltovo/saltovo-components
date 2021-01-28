@@ -11,7 +11,7 @@ export interface GroupCheckboxListMap {
 export default (props: SaltableProps) => {
   //默认为checked的数组
   const definecheckedList: React.Key[] = [];
-  const treeData: any = [];
+  const localTreeData: any = [];
   props.columns.map((item: Columnsvalue) => {
     if (item.defaultchecked) {
       definecheckedList.push(item.dataIndex);
@@ -28,11 +28,11 @@ export default (props: SaltableProps) => {
     if (item.children && item.children.length > 0) {
       let tempdata: any[] = [];
       item.children.map((ele: Columnsvalue) => {
-        tempdata.push({ title: ele.title, key: ele.dataIndex });
+        tempdata.push({ title: ele.title, key: ele.dataIndex, isLeaf: true });
       });
-      treeData.push({ title: item.title, key: item.dataIndex, children: tempdata });
+      localTreeData.push({ title: item.title, key: item.dataIndex, children: tempdata });
     } else {
-      treeData.push({ title: item.title, key: item.dataIndex });
+      localTreeData.push({ title: item.title, key: item.dataIndex, isLeaf: true });
     }
   });
 
@@ -44,13 +44,14 @@ export default (props: SaltableProps) => {
   const [checkedKeys, setCheckedKeys] = useState<any>(definecheckedList);
   //控制列设置的顺序调换
   //这里总觉得多渲染了一次，暂时先这样。后期再继续优化
-  const [treedata, setTreeData] = useState<any>(treeData);
+  const [treedata, setTreeData] = useState<any>(localTreeData);
   const counter = Counter.useContainer();
 
   useEffect(() => {
     handleReset();
   }, []);
 
+  //
   useEffect(() => {
     let sortData: string[] = [];
     treedata.map((item: { key: string; title: React.Key; children: { key: string; title: React.Key }[] }) => {
@@ -79,7 +80,7 @@ export default (props: SaltableProps) => {
     setCheckedKeys(definecheckedList);
     setIndeterminate(true);
     setCheckAll(false);
-    setTreeData(treeData);
+    setTreeData(localTreeData);
     counter.setColumnsMap(tempMap);
   };
 
@@ -105,6 +106,16 @@ export default (props: SaltableProps) => {
       <Tree
         checkable
         draggable
+        //增加树展开时的loading
+        loadData={(node) => {
+          return new Promise<void>((resolve) => {
+            if (node.children) {
+              setTimeout(() => {
+                resolve();
+              }, 1500);
+            }
+          });
+        }}
         onDrop={({ event, node, dragNode, dragNodesKeys }) => {
           //node.pos与dragNode.pos为树结构的值，如不理解可输出
           let nodePos = node.pos.split('-');
@@ -129,7 +140,6 @@ export default (props: SaltableProps) => {
           }
         }}
         onCheck={(checkedKeys, e) => {
-          console.log(checkedKeys);
           if (Array.isArray(checkedKeys)) {
             setIndeterminate(!!checkedKeys.length && checkedKeys.length < props.columns.length);
             setCheckAll(checkedKeys.length === props.columns.length);
