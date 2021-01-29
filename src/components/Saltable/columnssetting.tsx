@@ -40,8 +40,6 @@ export default (props: SaltableProps) => {
   const [indeterminate, setIndeterminate] = useState<boolean>(true);
   //控制是否为全选
   const [checkAll, setCheckAll] = useState<boolean>(false);
-  //选中的列数组
-  const [checkedKeys, setCheckedKeys] = useState<any>(definecheckedList);
   //控制列设置的顺序调换
   //这里总觉得多渲染了一次，暂时先这样。后期再继续优化
   const [treedata, setTreeData] = useState<any>(localTreeData);
@@ -53,7 +51,6 @@ export default (props: SaltableProps) => {
     counter.setColumnsMap(definecheckedList);
   }, []);
 
-  //
   useEffect(() => {
     let sortData: string[] = [];
     treedata.map((item: { key: string; title: React.Key; children: { key: string; title: React.Key }[] }) => {
@@ -68,7 +65,6 @@ export default (props: SaltableProps) => {
   }, [treedata]);
 
   const handleReset = () => {
-    setCheckedKeys(definecheckedList);
     setIndeterminate(true);
     setCheckAll(false);
     setTreeData(localTreeData);
@@ -79,11 +75,7 @@ export default (props: SaltableProps) => {
   };
 
   const onCheckAllChange = (e: any) => {
-    let list = props.columns.map((item: Columnsvalue) => {
-      return item.dataIndex;
-    });
     let tempMap: React.Key[] = [];
-    setCheckedKeys(e.target.checked ? list : []);
     setIndeterminate(false);
     setCheckAll(e.target.checked);
     if (e.target.checked) {
@@ -133,9 +125,8 @@ export default (props: SaltableProps) => {
             setCheckAll(checkedKeys.length === props.columns.length);
             counter.setColumnsMap(checkedKeys!);
           }
-          setCheckedKeys(checkedKeys);
         }}
-        checkedKeys={checkedKeys}
+        checkedKeys={counter.columnsSetting}
         treeData={localColumns}
       />
     );
