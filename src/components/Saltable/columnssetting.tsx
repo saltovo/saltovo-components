@@ -45,10 +45,12 @@ export default (props: SaltableProps) => {
   //控制列设置的顺序调换
   //这里总觉得多渲染了一次，暂时先这样。后期再继续优化
   const [treedata, setTreeData] = useState<any>(localTreeData);
+  //控制列设置树结构的展开
+  const [expandedkeys, setExpandKeys] = useState<React.Key[]>([]);
   const counter = Counter.useContainer();
 
   useEffect(() => {
-    handleReset();
+    counter.setColumnsMap(definecheckedList);
   }, []);
 
   //
@@ -66,22 +68,14 @@ export default (props: SaltableProps) => {
   }, [treedata]);
 
   const handleReset = () => {
-    let tempMap: React.Key[] = [];
-    props.columns.map((item: Columnsvalue) => {
-      if (item.children && item.children.length > 0) {
-        item.children.map((ele) => {
-          tempMap.push(ele.dataIndex);
-        });
-      }
-      if (item.defaultchecked) {
-        tempMap.push(item.dataIndex);
-      }
-    });
     setCheckedKeys(definecheckedList);
     setIndeterminate(true);
     setCheckAll(false);
     setTreeData(localTreeData);
-    counter.setColumnsMap(tempMap);
+    setExpandKeys([]);
+    counter.setColumnsMap(definecheckedList);
+    //回到最上方
+    document.getElementsByClassName('ant-popover-inner-content')[0].scrollTop = 0;
   };
 
   const onCheckAllChange = (e: any) => {
@@ -106,16 +100,10 @@ export default (props: SaltableProps) => {
       <Tree
         checkable
         draggable
-        //增加树展开时的loading
-        loadData={(node) => {
-          return new Promise<void>((resolve) => {
-            if (node.children) {
-              setTimeout(() => {
-                resolve();
-              }, 1500);
-            }
-          });
+        onExpand={(expandedKeys) => {
+          setExpandKeys(expandedKeys);
         }}
+        expandedKeys={expandedkeys}
         onDrop={({ event, node, dragNode, dragNodesKeys }) => {
           //node.pos与dragNode.pos为树结构的值，如不理解可输出
           let nodePos = node.pos.split('-');
@@ -155,6 +143,7 @@ export default (props: SaltableProps) => {
 
   return (
     <Popover
+      id="zzz"
       overlayClassName="columnssetting-popover"
       title={
         <div style={{ padding: '4px 16px 4px 22px' }}>
