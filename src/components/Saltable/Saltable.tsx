@@ -20,11 +20,6 @@ export default (props: SaltableProps) => {
   const counter = Counter.useContainer();
 
   useEffect(() => {
-    // let sortData: string[] = [];
-    // props.columns.map((item: Columnsvalue) => {
-    //   return sortData.push(item.dataIndex);
-    // });
-    // counter.setSortKeyColumns(sortData);
     let columnsSettingShow = props.columns.some((ele) => {
       return ele.defaultchecked;
     });
@@ -55,17 +50,10 @@ export default (props: SaltableProps) => {
 
   const columns = useMemo(() => {
     let tempArray: Columnsvalue[] = [];
-    let checkedMap: ColumnsMap = new Map();
-    //先把React.Key[]转换为ColumnsMap的形式，再根据sortKeyColumns排序生成真正的columns
-    //每次跟新都需要遍历整个props.columns，消耗性能,后期需要优化
-    counter.columnsSetting.map((item) => {
-      if (ColumnsTransformMap.has(item)) {
-        checkedMap.set(item, ColumnsTransformMap.get(item));
-      }
-    });
-    counter.sortKeyColumns.map((item, index) => {
-      if (checkedMap.has(item)) {
-        tempArray.push(checkedMap.get(item)!);
+    //当ColumnsTransformMap与counter.columnsSetting中均存在item是放入tempArray
+    counter.sortKeyColumns.map((item) => {
+      if (ColumnsTransformMap.has(item) && counter.columnsSetting.includes(item)) {
+        tempArray.push(ColumnsTransformMap.get(item));
       }
     });
     if (!columnssettingshow) {
