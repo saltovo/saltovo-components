@@ -81,6 +81,11 @@ export default (props: SaltableProps) => {
     if (e.target.checked) {
       props.columns.map((item: Columnsvalue) => {
         tempMap.push(item.dataIndex);
+        if(item.children){
+          item.children.map((ele)=>{
+            tempMap.push(ele.dataIndex);
+          })
+        }
       });
     }
     counter.setColumnsMap(tempMap);
