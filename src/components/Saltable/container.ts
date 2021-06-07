@@ -1,6 +1,6 @@
 import { createContainer } from 'unstated-next';
-import { useState, useRef } from 'react';
-import { ColumnProps, ColumnsType } from 'antd/lib/table';
+import React, { useState } from 'react';
+import { ColumnsType } from 'antd/lib/table';
 
 export interface Columnsvalue<p = unknown> extends ColumnsType<p> {
   title: string;
@@ -14,9 +14,9 @@ export interface Columnsvalue<p = unknown> extends ColumnsType<p> {
 export type ColumnsMap = Map<React.Key, Columnsvalue>;
 
 function useCounter() {
-  //原来columnsSetting使用Map类型现在使用React.Key[],优化后期添加的二级树结构
-  let [columnsSetting, setColumnsSetting] = useState<React.Key[]>([]);
-  let [sortKeyColumns, setSortKeyColumns] = useState<string[]>([]);
+  // 原来columnsSetting使用Map类型现在使用React.Key[],优化后期添加的二级树结构
+  const [columnsSetting, setColumnsSetting] = useState<React.Key[]>([]);
+  const [sortKeyColumns, setSortKeyColumns] = useState<string[]>([]);
   const setColumnsMap = (map: React.Key[]) => setColumnsSetting(map);
   return {
     sortKeyColumns,

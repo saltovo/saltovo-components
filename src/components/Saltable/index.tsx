@@ -1,8 +1,7 @@
 import React from 'react';
-import Counter from './container';
+import Counter, { Columnsvalue } from './container';
 import Saltable from './Saltable';
 import { TableProps } from 'antd/lib/table';
-import { Columnsvalue } from './container';
 import { VList } from './vlist';
 import 'antd/lib/tree/style/index.css';
 
@@ -20,7 +19,7 @@ export interface SaltableProps extends TableProps<any> {
 
 export default (props: SaltableProps) => {
   const saltTableprops = { ...props };
-  //开启虚拟列表
+  // 开启虚拟列表
   if (props.useVirtual && props.scroll?.y) {
     saltTableprops.components = VList({ height: props.scroll?.y });
   }
