@@ -1,6 +1,6 @@
 {
   "name": "saltovo-compents",
-  "version": "1.0.1-beta.11",
+  "version": "1.0.1-beta.12",
   "description": "saltovo react library, 基于antd的虚拟列表，列设置，树结构列设置",
   "author": "saltovo",
   "keywords": [

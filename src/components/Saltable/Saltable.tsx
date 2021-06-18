@@ -20,12 +20,11 @@ export default (props: SaltableProps) => {
   const counter = Counter.useContainer();
 
   useEffect(() => {
-    const columnsSettingShow = props.columns.some((ele) => {
-      return ele.defaultchecked;
+    const isShow = props.columns.some((column) => {
+      console.log(column.defaultchecked);
+      return column.defaultchecked;
     });
-    if (!columnsSettingShow) {
-      setColumnsSettingShow(false);
-    }
+    setColumnsSettingShow(isShow);
   }, [props.columns]);
 
   // 判断渲染toolBarRender
@@ -60,7 +59,7 @@ export default (props: SaltableProps) => {
       tempArray = props.columns;
     }
     return tempArray;
-  }, [counter.sortKeyColumns, counter.columnsSetting, columnssettingshow]);
+  }, [counter.sortKeyColumns, counter.columnsSetting, columnssettingshow, props.columns]);
 
   useEffect(() => {
     if (props.onColumnsStateChange) {
