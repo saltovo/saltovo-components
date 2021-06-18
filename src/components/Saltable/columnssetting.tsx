@@ -42,14 +42,21 @@ export default (props: SaltableProps) => {
   const [checkAll, setCheckAll] = useState<boolean>(false);
   //控制列设置的顺序调换
   //这里总觉得多渲染了一次，暂时先这样。后期再继续优化
-  const [treedata, setTreeData] = useState<any>(localTreeData);
+  const [treedata, setTreeData] = useState<any>([]);
   //控制列设置树结构的展开
   const [expandedkeys, setExpandKeys] = useState<React.Key[]>([]);
   const counter = Counter.useContainer();
 
   useEffect(() => {
     counter.setColumnsMap(definecheckedList);
-  }, []);
+  }, [props.columns]);
+
+  console.log(localTreeData);
+  console.log(treedata);
+
+  useEffect(() => {
+    setTreeData(localTreeData);
+  }, [props.columns]);
 
   useEffect(() => {
     let sortData: string[] = [];
@@ -81,10 +88,10 @@ export default (props: SaltableProps) => {
     if (e.target.checked) {
       props.columns.map((item: Columnsvalue) => {
         tempMap.push(item.dataIndex);
-        if(item.children){
-          item.children.map((ele)=>{
+        if (item.children) {
+          item.children.map((ele) => {
             tempMap.push(ele.dataIndex);
-          })
+          });
         }
       });
     }
